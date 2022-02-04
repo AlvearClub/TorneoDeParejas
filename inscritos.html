@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.lineicons.com/2.0/LineIcons.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Inicio</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+  <script>
+
+  var script_url = "https://script.google.com/macros/s/AKfycbxFRlp_FHwrNkQg6VJ7T9nh4UZUVaiIyNm7Qqy9R_BNMrULwOs/exec";
+
+  // print the returned data
+  function ctrlq(e) {
+
+
+	$("#re").html(e.result);
+	$("#re").css("visibility","visible");
+	read_value();
+  }
+
+
+
+
+function read_value() {
+
+$("#re").css("visibility","hidden");
+
+   document.getElementById("loader").style.visibility = "visible";
+ var url = script_url+"?action=read";
+
+$.getJSON(url, function (json) {
+
+  let divcontainer = document.createElement("div");
+  divcontainer.className="container";
+
+  let rowDivContainer = document.createElement("div");
+  rowDivContainer.className="row justify-content-center";
+  divcontainer.appendChild(rowDivContainer);
+
+  for(var i = 1; i < json.records.length; i=i+2){ 
+
+    let colDivContainer = document.createElement("div");
+    colDivContainer.className = "col-md-3 parejaDeJugadores";
+    rowDivContainer.appendChild(colDivContainer);
+
+    let tarjetaPareja = document.createElement("div");
+    tarjetaPareja.className="tarjetaPareja";
+    colDivContainer.appendChild(tarjetaPareja);
+
+    let nombrePareja = document.createElement("h6");
+    nombrePareja.textContent = json.records[i-1].NOMBRES +"/"+ json.records[i].NOMBRES;
+    nombrePareja.id="nombrePar";
+    tarjetaPareja.appendChild(nombrePareja);
+    let puntajeJugadores = document.createElement ("h6");
+    puntajeJugadores.id="puntajeJug";
+    puntajeJugadores.textContent = json.records[i-1].PUNTAJETMT+json.records[i].PUNTAJETMT + "pts";
+    tarjetaPareja.appendChild(puntajeJugadores);
+    
+    let imgCategorias = document.createElement("div");
+    imgCategorias.id="imgCategorias";
+    imgCategorias.style="display:flex;";
+    tarjetaPareja.appendChild(imgCategorias);
+
+    let imgCategoriaUno = document.createElement("img");
+    if(json.records[i-1].PUNTAJETMT > 599 & json.records[i-1].PUNTAJETMT <800){
+      imgCategoriaUno.src="images/icono_puesto_4ta.gif";
+    }
+    if(json.records[i-1].PUNTAJETMT > 399 & json.records[i-1].PUNTAJETMT <600){
+      imgCategoriaUno.src="images/icono_puesto_5ta.gif";
+    }
+    if(json.records[i-1].PUNTAJETMT > 199 & json.records[i-1].PUNTAJETMT <400){
+      imgCategoriaUno.src="images/icono_puesto_6ta.gif";
+    }
+    if(json.records[i-1].PUNTAJETMT > -1 & json.records[i-1].PUNTAJETMT <200){
+      imgCategoriaUno.src="images/icono_puesto_7ma.gif";
+    }
+    imgCategorias.appendChild(imgCategoriaUno);
+
+    let imgCategoriaDos = document.createElement("img");
+    if(json.records[i].PUNTAJETMT > 599 & json.records[i].PUNTAJETMT <800){
+      imgCategoriaDos.src="images/icono_puesto_4ta.gif";
+    }
+    if(json.records[i].PUNTAJETMT > 399 & json.records[i].PUNTAJETMT <600){
+      imgCategoriaDos.src="images/icono_puesto_5ta.gif";
+    }
+    if(json.records[i].PUNTAJETMT > 199 & json.records[i].PUNTAJETMT <400){
+      imgCategoriaDos.src="images/icono_puesto_6ta.gif";
+    }
+    if(json.records[i].PUNTAJETMT > -1 & json.records[i].PUNTAJETMT <200){
+      imgCategoriaDos.src="images/icono_puesto_7ma.gif";
+    }
+    imgCategorias.appendChild(imgCategoriaDos);
+    
+    let posicionDelTorneo = document.createElement("p");
+    posicionDelTorneo.className = "posicionDelTorneo";
+    posicionDelTorneo.textContent = "#" + json.records[i-1].POSICION + " del torneo";
+    tarjetaPareja.appendChild(posicionDelTorneo);
+    
+    let botonCaracteristicas = document.createElement("button");
+    botonCaracteristicas.className="botonCaracteristicas";
+    tarjetaPareja.appendChild(botonCaracteristicas);
+
+    
+    let popup = document.createElement("a");
+    popup.href="#popup"+i;
+    popup.textContent= "Ver Detalles";
+    popup.style = "text-decoration: none; color: white;";
+    botonCaracteristicas.appendChild(popup);
+
+    let divpop = document.createElement("div");
+    divpop.className="overlay";
+    divpop.id="popup"+i;
+    colDivContainer.appendChild(divpop);
+
+    let divpop2 = document.createElement("div");
+    divpop2.id="popupBody";
+    divpop2.className = "text-center";
+    divpop.appendChild(divpop2);
+
+    let close = document.createElement("a");
+    close.textContent="x";
+    close.id="cerrar";
+    close.href="#";
+    divpop2.appendChild(close);
+
+    let divpop3 = document.createElement("div");
+    divpop3.className="popupContent container-fluid";
+    divpop2.appendChild(divpop3);
+
+    let tabla = document.createElement("div")
+    tabla.className = "container";
+    divpop3.appendChild(tabla);
+    let row = document.createElement("div");
+    row.className = "row";
+    tabla.appendChild(row);
+    let colUno = document.createElement("div");
+    colUno.align="center";
+    colUno.className = "col-6 align-items-center";
+    row.appendChild(colUno);
+    let colDos=document.createElement("div");
+    colDos.className= "col-6";
+    row.appendChild(colDos);
+
+
+    let avatarUno=document.createElement("img");
+    if(json.records[i-1].SEXO=="masculino"){
+      avatarUno.src="images/masculino.jpg"
+    }
+    else{
+      avatarUno.src="images/femenino.jpg"
+    }
+    avatarUno.className = "avatarUno";
+    colUno.appendChild(avatarUno);
+
+    let jugadorUnoPop = document.createElement("h6");
+    jugadorUnoPop.className = "NombreJugadorUnoPopup";
+    jugadorUnoPop.textContent = json.records[i-1].NOMBRES;
+    colUno.appendChild(jugadorUnoPop);
+
+    let divClubPop = document.createElement("div");
+    divClubPop.style="display:flex; justify-content:center;";
+    divClubPop.className="puntajeUno";
+    colUno.appendChild(divClubPop);
+
+    let puntajeJugadorUnoPop = document.createElement("p");
+    puntajeJugadorUnoPop.className = "PuntajeJugadorUnoPop"
+    puntajeJugadorUnoPop.textContent = "Rating: "+json.records[i-1].PUNTAJETMT;
+    divClubPop.appendChild(puntajeJugadorUnoPop);
+
+    let fotoCategoriaJugadorUnoPop = document.createElement("img");
+    fotoCategoriaJugadorUnoPop.className = "IMGPtsJugadorUnoPop";
+    if(json.records[i-1].PUNTAJETMT > 599 & json.records[i-1].PUNTAJETMT <800){
+      fotoCategoriaJugadorUnoPop.src="images/icono_puesto_4ta.gif";
+    }
+    if(json.records[i-1].PUNTAJETMT > 399 & json.records[i-1].PUNTAJETMT <600){
+      fotoCategoriaJugadorUnoPop.src="images/icono_puesto_5ta.gif";
+    }
+    if(json.records[i-1].PUNTAJETMT > 199 & json.records[i-1].PUNTAJETMT <400){
+      fotoCategoriaJugadorUnoPop.src="images/icono_puesto_6ta.gif";
+    }
+    if(json.records[i-1].PUNTAJETMT > -1 & json.records[i-1].PUNTAJETMT <200){
+      fotoCategoriaJugadorUnoPop.src="images/icono_puesto_7ma.gif";
+    }
+    divClubPop.appendChild(fotoCategoriaJugadorUnoPop);
+
+    let clubJugadorUnoPop = document.createElement("p");
+    clubJugadorUnoPop.className = "clubJugadorUnoPop"
+    clubJugadorUnoPop.textContent = "Club: "+json.records[i-1].CLUB;
+    colUno.appendChild(clubJugadorUnoPop);
+
+    let manoJugadorUnoPop = document.createElement("p");
+    manoJugadorUnoPop.className = "manoJugadorUnoPop"
+    manoJugadorUnoPop.textContent = "Mano Habil: "+json.records[i-1].MANOHABIL;
+    colUno.appendChild(manoJugadorUnoPop);
+
+    let edadJugadorUnoPop = document.createElement("p");
+    edadJugadorUnoPop.className = "edadJugadorUnoPop"
+    edadJugadorUnoPop.textContent = "Edad: "+json.records[i-1].EDAD;
+    colUno.appendChild(edadJugadorUnoPop);
+
+
+    let avatarDos=document.createElement("img");
+    if(json.records[i].SEXO=="masculino"){
+      avatarDos.src="images/masculino.jpg"
+    }
+    else{
+      avatarDos.src="images/femenino.jpg"
+    }
+    avatarDos.className = "avatarDos";
+    colDos.appendChild(avatarDos);
+
+    let jugadorDosPop = document.createElement("h6");
+    jugadorDosPop.className = "NombreJugadorDosPopup";
+    jugadorDosPop.textContent = json.records[i].NOMBRES;
+    colDos.appendChild(jugadorDosPop);
+
+    let divClubPopDos = document.createElement("div");
+    divClubPopDos.style="display:flex; justify-content:center;";
+    divClubPopDos.className="puntajeDos";
+    colDos.appendChild(divClubPopDos);
+
+    let puntajeJugadorDosPop = document.createElement("p");
+    puntajeJugadorDosPop.className = "PuntajeJugadorDosPop"
+    puntajeJugadorDosPop.textContent = "Rating: "+json.records[i].PUNTAJETMT;
+    divClubPopDos.appendChild(puntajeJugadorDosPop);
+
+    let fotoCategoriaJugadorDosPop = document.createElement("img");
+    fotoCategoriaJugadorDosPop.className = "IMGPtsJugadorDosPop";
+    if(json.records[i].PUNTAJETMT > 599 & json.records[i].PUNTAJETMT <800){
+      fotoCategoriaJugadorDosPop.src="images/icono_puesto_4ta.gif";
+    }
+    if(json.records[i].PUNTAJETMT > 399 & json.records[i].PUNTAJETMT <600){
+      fotoCategoriaJugadorDosPop.src="images/icono_puesto_5ta.gif";
+    }
+    if(json.records[i].PUNTAJETMT > 199 & json.records[i].PUNTAJETMT <400){
+      fotoCategoriaJugadorDosPop.src="images/icono_puesto_6ta.gif";
+    }
+    if(json.records[i].PUNTAJETMT > -1 & json.records[i].PUNTAJETMT <200){
+      fotoCategoriaJugadorDosPop.src="images/icono_puesto_7ma.gif";
+    }
+    divClubPopDos.appendChild(fotoCategoriaJugadorDosPop);
+
+    let clubJugadorDosPop = document.createElement("p");
+    clubJugadorDosPop.className = "clubJugadorDosPop"
+    clubJugadorDosPop.textContent = "Club: "+json.records[i].CLUB;
+    colDos.appendChild(clubJugadorDosPop);
+
+    let manoJugadorDosPop = document.createElement("p");
+    manoJugadorDosPop.className = "manoJugadorDosPop"
+    manoJugadorDosPop.textContent = "Mano Habil: "+json.records[i].MANOHABIL;
+    colDos.appendChild(manoJugadorDosPop);
+
+    let edadJugadorDosPop = document.createElement("p");
+    edadJugadorDosPop.className = "edadJugadorDosPop"
+    edadJugadorDosPop.textContent = "Edad: "+json.records[i].EDAD;
+    colDos.appendChild(edadJugadorDosPop);
+
+  }
+
+
+    
+
+        
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(divcontainer);
+        
+
+		document.getElementById("loader").style.visibility = "hidden";
+    document.getElementById("loader").style.display = "none";
+		$("#re").css("visibility","visible");
+    });
+	}
+
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body class="cuerpo">
+
+    <div class="contenedor">
+      <div class="rowo">
+            <div class="LogoClub text-center">
+                <img src="images/Alvear Club TDM.png">
+            </div>
+            <div class="column-1 text-center">
+                <h2>1° Torneo de Parejas Alvear Nittaku</h2>
+                <h3>Listado de Inscritos</h3>
+            </div>
+      </div>
+    </div>
+
+    <!-- Listado de Inscriptos  -->
+    <div>
+
+      <p id="re"></p>
+
+      <input id="b1" type="button" onclick="read_value()"class="btn" style="height: 8vh; width: 1vh; font-size: 3vh; margin-bottom: 3vh; display: none; border:1px solid white; color:white;" value="Ver Listado" />
+      
+      <div id="showData">
+      </div>
+
+      <div id="loader" align="center">
+          <lord-icon src="https://cdn.lordicon.com/xjovhxra.json" trigger="loop" colors="primary:#ffffff,secondary:#1e212a" style="width:175px;height:175px"></lord-icon>
+      </div>
+
+    </div>
+
+    
+
+    <!-- Sponsors  -->
+    <div class="container-fluid text-center auspi" style="margin-top: 2vh;">
+
+      <h5 style="color:#b7b7b7;; padding-top: 3vh;">Auspician:</h5>
+
+      <div class="row justify-content-center align-items-center">
+
+        <div class="col-sm-2 text-center">
+          <a href="">
+            <img class="imgAus" src="images/Goldstein.png" style="" alt="">
+          </a>
+        </div>
+        <div class="col-sm-1 text-center">
+          <a href="">
+            <img class="imgAus text-center" src="images/Diego Temperley.png" style="" alt="">
+          </a>
+        </div>
+        <div class="col-sm-1 text-center">
+            <a href="">
+              <img class="imgAus text-center" src="images/Shizen White.png" style="" alt="">
+            </a>
+        </div>
+        <div class="col-sm-1 text-center">
+            <a href="">
+              <img class="imgAus text-center" src="images/Nittaku.png" style="" alt="">
+            </a>
+        </div>
+        <div class="col-sm-1 text-center">
+            <a href="">
+              <img class="imgAus text-center" src="images/ARD.png" style="" alt="">
+            </a>
+        </div>
+        <div class="col-sm-1 text-center">
+            <a href="">
+              <img class="imgAus text-center" src="images/FHM.png" style="" alt="">
+            </a>
+        </div>
+
+      </div>
+    </div>
+
+  <section class="footer">
+      <p class="text"><a  href="https://wa.link/4o7d77">Si quiere adquirir el sistema haga click aqui</a></p>
+      <p class="text">Diseño y desarrollo por Diego Simon</p>
+    </section>
+  
+    <script>
+      window.onload = function Ejemplo(){
+        $("#b1").click();
+      }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  
+
+</body>
+</html>
