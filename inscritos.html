@@ -206,6 +206,11 @@ $.getJSON(url, function (json) {
     edadJugadorUnoPop.textContent = "Edad: "+json.records[i-1].EDAD;
     colUno.appendChild(edadJugadorUnoPop);
 
+    let verPerfilUno = document.createElement("a");
+    verPerfilUno.textContent="Ver Perfil TMT";
+    verPerfilUno.style="border: 1px solid white; padding: 3px 5px; text-decoration: none; color: white; font-size: 13px; border-radius: 10px;";
+    verPerfilUno.href="https://www.tenisdemesaparatodos.com/jugadores_ficha.asp?codigo="+json.records[i-1].CODIGOTMT;
+    colUno.appendChild(verPerfilUno);
 
     let avatarDos=document.createElement("img");
     if(json.records[i].SEXO=="masculino"){
@@ -262,6 +267,12 @@ $.getJSON(url, function (json) {
     edadJugadorDosPop.className = "edadJugadorDosPop"
     edadJugadorDosPop.textContent = "Edad: "+json.records[i].EDAD;
     colDos.appendChild(edadJugadorDosPop);
+
+    let verPerfilDos = document.createElement("a");
+    verPerfilDos.textContent="Ver Perfil TMT";
+    verPerfilDos.style="border: 1px solid white; padding: 3px 5px; text-decoration: none; color: white; font-size: 13px; border-radius: 10px;";
+    verPerfilDos.href="https://www.tenisdemesaparatodos.com/jugadores_ficha.asp?codigo="+json.records[i].CODIGOTMT;
+    colDos.appendChild(verPerfilDos);
 
   }
 
