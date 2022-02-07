@@ -275,6 +275,20 @@ $.getJSON(url, function (json) {
     verPerfilDos.href="https://www.tenisdemesaparatodos.com/jugadores_ficha.asp?codigo="+json.records[i].CODIGOTMT;
     colDos.appendChild(verPerfilDos);
 
+    let divpop4 = document.createElement("div");
+    divpop4.className="popupContent container-fluid";
+    divpop2.appendChild(divpop4);
+
+    let posPareja = document.createElement("p");
+    posPareja.textContent = "Posicion: #" + json.records[i-1].POSICION + " del torneo";
+    divpop4.appendChild(posPareja);
+    let puntosPareja = document.createElement("p");
+    let sumapts = json.records[i-1].PUNTAJETMT + json.records[i].PUNTAJETMT;
+    puntosPareja.textContent = "Puntaje: " + sumapts + " pts";
+    divpop4.appendChild(puntosPareja);
+
+
+
   }
 
 
