@@ -11,8 +11,138 @@
 
     <title>Inicio</title>
     
-    <style>
-    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+  <script>
+
+  var script_url = "https://script.google.com/macros/s/AKfycbzRRjQlMGc-EkPzqxGioMOtNuUV-ko_vHk6PD04OrlREM2kIexz/exec";
+
+  // print the returned data
+  function ctrlq(e) {
+
+
+	$("#re").html(e.result);
+	$("#re").css("visibility","visible");
+	read_value();
+  }
+
+
+
+
+function read_value() {
+
+$("#re").css("visibility","hidden");
+
+   document.getElementById("loader").style.visibility = "visible";
+   
+ var url = script_url+"?action=read";
+
+$.getJSON(url, function (json) {
+
+  let divcontainer = document.createElement("div");
+  divcontainer.className="container";
+
+  let rowDivContainer = document.createElement("div");
+  rowDivContainer.className="row justify-content-center";
+  divcontainer.appendChild(rowDivContainer);
+
+  var abecedario = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  var cont = 0;
+  for(var i = 1; i < json.records.length; i=i+3){ 
+
+    let colDivContainer = document.createElement("div");
+    colDivContainer.className = "col-md-4 Zonas";
+    rowDivContainer.appendChild(colDivContainer);
+
+    let nombreZona = document.createElement("p");
+    nombreZona.textContent = "Zona " + abecedario[cont] + " Mesa " + (cont+1);
+    nombreZona.align="center";
+    cont++;
+    colDivContainer.appendChild(nombreZona);
+
+    for(var j=0; j < 3; j++){
+
+      let parejaZona = document.createElement("div");
+      parejaZona.className = "parejaZona";
+      colDivContainer.appendChild(parejaZona);
+
+      let nombre1 = document.createElement("p");
+      nombre1.id = "nombre1";
+      nombre1.textContent = json.records[i-1+j].NOMBRE1;
+      parejaZona.appendChild(nombre1);
+
+      let nombre2 = document.createElement("p");
+      nombre2.id = "nombre2";
+      nombre2.textContent = json.records[i-1+j].NOMBRE2;
+      parejaZona.appendChild(nombre2);
+
+      let divisiones = document.createElement("div");
+      divisiones.className = "divisionesZona";
+      parejaZona.appendChild(divisiones);
+
+      let div1 = document.createElement("img");
+      div1.className="categoriauno";
+      if(json.records[i-1+j].PUNTAJE1 > 599 & json.records[i-1+j].PUNTAJE1 <800){
+        div1.src="images/icono_puesto_4ta.gif";
+      }
+      if(json.records[i-1+j].PUNTAJE1 > 399 & json.records[i-1+j].PUNTAJE1 <600){
+        div1.src="images/icono_puesto_5ta.gif";
+      }
+      if(json.records[i-1+j].PUNTAJE1 > 199 & json.records[i-1+j].PUNTAJE1 <400){
+        div1.src="images/icono_puesto_6ta.gif";
+      }
+      if(json.records[i-1+j].PUNTAJE1 > -1 & json.records[i-1+j].PUNTAJE1 <200){
+        div1.src="images/icono_puesto_7ma.gif";
+      }
+      divisiones.appendChild(div1);
+
+      let div2 = document.createElement("img");
+      if(json.records[i-1+j].PUNTAJE2 > 599 & json.records[i-1+j].PUNTAJE2 <800){
+        div2.src="images/icono_puesto_4ta.gif";
+      }
+      if(json.records[i-1+j].PUNTAJE2 > 399 & json.records[i-1+j].PUNTAJE2 <600){
+        div2.src="images/icono_puesto_5ta.gif";
+      }
+      if(json.records[i-1+j].PUNTAJE2 > 199 & json.records[i-1+j].PUNTAJE2 <400){
+        div2.src="images/icono_puesto_6ta.gif";
+      }
+      if(json.records[i-1+j].PUNTAJE2 > -1 & json.records[i-1+j].PUNTAJE2 <200){
+        div2.src="images/icono_puesto_7ma.gif";
+      }
+      div2.className="categoriados";
+      divisiones.appendChild(div2);
+
+
+      let puntaje = document.createElement("p");
+      puntaje.id="puntajePareja"
+      puntaje.textContent = json.records[i-1+j].SUMA + " Pts";
+      parejaZona.appendChild(puntaje);
+    }
+   
+    
+
+  }
+
+
+    
+
+        
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(divcontainer);
+        
+
+		document.getElementById("loader").style.visibility = "hidden";
+    document.getElementById("loader").style.display = "none";
+
+		$("#re").css("visibility","visible");
+    });
+	}
+
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
 <body class="cuerpo">
@@ -29,7 +159,22 @@
       </div>
     </div>
 
-   <h4 align="center" >Proximamente Zonas del torneo</h4>
+   <!-- Zonas  -->
+   <div>
+
+    <p id="re"></p>
+
+    <input id="b1" type="button" onclick="read_value()"class="btn" style="height: 8vh; width: 1vh; font-size: 3vh; margin-bottom: 3vh; display: none; border:1px solid white; color:white;" value="Ver Listado" />
+    
+    <div id="showData">
+    </div>
+
+    <div id="loader" align="center">
+      <img src="images/loading.gif" alt="" style="height: 90px; width: 90px;">
+      <p style="color: white;">Cargando..</p>
+    </div>
+
+  </div>
 
     <!-- Sponsors  -->
     <div class="container-fluid text-center auspi" style="margin-top: 2vh;">
@@ -77,7 +222,12 @@
       <p class="text">Diseño y desarrollo por Diego Simon</p>
     </section>
 
-  
+    <script>
+      window.onload = function Ejemplo(){
+        $("#b1").click();
+      }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
 </body>
 </html>
