@@ -71,6 +71,16 @@ $.getJSON(url, function (json) {
     tarjetaPareja.appendChild(imgCategorias);
 
     let imgCategoriaUno = document.createElement("img");
+
+    if(json.records[i-1].PUNTAJETMT > 1199){
+      imgCategoriaUno.src="images/icono_puesto_1ra.gif";
+    }
+    if(json.records[i-1].PUNTAJETMT > 999 & json.records[i-1].PUNTAJETMT <1200){
+      imgCategoriaUno.src="images/icono_puesto_2da.gif";
+    }
+    if(json.records[i-1].PUNTAJETMT > 799 & json.records[i-1].PUNTAJETMT <1000){
+      imgCategoriaUno.src="images/icono_puesto_3ra.gif";
+    }
     if(json.records[i-1].PUNTAJETMT > 599 & json.records[i-1].PUNTAJETMT <800){
       imgCategoriaUno.src="images/icono_puesto_4ta.gif";
     }
@@ -85,7 +95,17 @@ $.getJSON(url, function (json) {
     }
     imgCategorias.appendChild(imgCategoriaUno);
 
+    
     let imgCategoriaDos = document.createElement("img");
+    if(json.records[i].PUNTAJETMT > 1199){
+      imgCategoriaDos.src="images/icono_puesto_1ra.gif";
+    }
+    if(json.records[i].PUNTAJETMT > 999 & json.records[i].PUNTAJETMT <1200){
+      imgCategoriaDos.src="images/icono_puesto_2da.gif";
+    }
+    if(json.records[i].PUNTAJETMT > 799 & json.records[i].PUNTAJETMT <1000){
+      imgCategoriaDos.src="images/icono_puesto_3ra.gif";
+    }
     if(json.records[i].PUNTAJETMT > 599 & json.records[i].PUNTAJETMT <800){
       imgCategoriaDos.src="images/icono_puesto_4ta.gif";
     }
@@ -178,6 +198,15 @@ $.getJSON(url, function (json) {
 
     let fotoCategoriaJugadorUnoPop = document.createElement("img");
     fotoCategoriaJugadorUnoPop.className = "IMGPtsJugadorUnoPop";
+    if(json.records[i-1].PUNTAJETMT > 1199){
+      fotoCategoriaJugadorUnoPop.src="images/icono_puesto_1ra.gif";
+    }
+    if(json.records[i-1].PUNTAJETMT > 999 & json.records[i-1].PUNTAJETMT <1200){
+      fotoCategoriaJugadorUnoPop.src="images/icono_puesto_2da.gif";
+    }
+    if(json.records[i-1].PUNTAJETMT > 799 & json.records[i-1].PUNTAJETMT <1000){
+      fotoCategoriaJugadorUnoPop.src="images/icono_puesto_3ra.gif";
+    }
     if(json.records[i-1].PUNTAJETMT > 599 & json.records[i-1].PUNTAJETMT <800){
       fotoCategoriaJugadorUnoPop.src="images/icono_puesto_4ta.gif";
     }
@@ -240,6 +269,15 @@ $.getJSON(url, function (json) {
 
     let fotoCategoriaJugadorDosPop = document.createElement("img");
     fotoCategoriaJugadorDosPop.className = "IMGPtsJugadorDosPop";
+    if(json.records[i].PUNTAJETMT > 1199){
+      fotoCategoriaJugadorDosPop.src="images/icono_puesto_1ra.gif";
+    }
+    if(json.records[i].PUNTAJETMT > 999 & json.records[i].PUNTAJETMT <1200){
+      fotoCategoriaJugadorDosPop.src="images/icono_puesto_2da.gif";
+    }
+    if(json.records[i].PUNTAJETMT > 799 & json.records[i].PUNTAJETMT <1000){
+      fotoCategoriaJugadorDosPop.src="images/icono_puesto_3ra.gif";
+    }
     if(json.records[i].PUNTAJETMT > 599 & json.records[i].PUNTAJETMT <800){
       fotoCategoriaJugadorDosPop.src="images/icono_puesto_4ta.gif";
     }
@@ -321,7 +359,7 @@ $.getJSON(url, function (json) {
                 <img src="images/Alvear Club TDM.png">
             </div>
             <div class="column-1 text-center">
-                <h2>1° Torneo de Parejas Alvear Nittaku</h2>
+                <h2>2° Torneo de Parejas Alvear Nittaku</h2>
                 <h3>Listado de Inscriptos</h3>
             </div>
       </div>
