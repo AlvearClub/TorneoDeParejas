@@ -534,16 +534,26 @@ for(var i = 1; i < json.records.length; i++){
                 <img src="images/Alvear Club TDM.png">
             </div>
             <div class="column-1 text-center">
-                <h2>1° Torneo de Parejas Alvear Nittaku</h2>
+                <h2>2° Torneo de Parejas Alvear Nittaku</h2>
                 <h3>Llave Del Torneo</h3>
             </div>
       </div>
     </div>
 
    <!-- Zonas  -->
-   <div align="center">
+   <div>
 
-    <h4> Proximamente Llaves del Torneo </h4>
+    <p id="re"></p>
+
+    <input id="b1" type="button" onclick="read_value()"class="btn" style="height: 8vh; width: 1vh; font-size: 3vh; margin-bottom: 3vh; display: none; border:1px solid white; color:white;" value="Ver Listado" />
+    
+    <div id="showData">
+    </div>
+
+    <div id="loader" align="center">
+      <img src="images/loading.gif" alt="" style="height: 90px; width: 90px;">
+      <p style="color: white;">Cargando..</p>
+    </div>
 
   </div>
 
@@ -593,7 +603,11 @@ for(var i = 1; i < json.records.length; i++){
       <p class="text">Diseño y desarrollo por Diego Simon</p>
     </section>
 
-   
+    <script>
+      window.onload = function Ejemplo(){
+        $("#b1").click();
+      }
+    </script>
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
 </body>

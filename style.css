@@ -274,11 +274,11 @@
 
 .fondogris{
     width: 20px;
-    background-color: grey;
+    background-color: orange;
 }
 .fondonaranja{
     width: 20px;
-    background-color: blue;
+    background-color: rgb(0, 157, 255);
 }
 .nombresLlave, .nombresLlaveBye{
     font-weight: 300;
@@ -291,7 +291,7 @@
     text-align: center;
 }
 .fondogris, .fondonaranja, .nombresLlave, .nombresLlaveBye, .fondoVerdeBye{
-    border: 1px solid rgb(24, 24, 24);
+    border: 1px solid rgb(0, 157, 255);
 }
 .tabla{
     margin: 20px 0;
